@@ -1,0 +1,132 @@
+# cloud_dog_vdb — Default configuration
+# Standard: PS-60 (Vector DB Interfaces)
+# NO SECRETS — all credentials via Vault or os.environ
+
+vector_stores:
+  default_backend: ""               # chroma | qdrant | weaviate | opensearch | pgvector | infinity
+  chroma:
+    enabled: false
+    base_url: ""                    # From Vault: dev.vdbs.chroma.base_url
+    auth_token: ""                  # From Vault: dev.vdbs.chroma.auth_token
+    ssl: true
+  qdrant:
+    enabled: false
+    host: ""                        # From Vault: dev.vdbs.qdrant.host
+    port: 6333
+    url: ""                         # From Vault: dev.vdbs.qdrant.url
+    api_key: ""                     # From Vault: dev.vdbs.qdrant.api_key
+  weaviate:
+    enabled: false
+    url: ""                         # From Vault: dev.vdbs.weaviate.url
+    api_key: ""                     # From Vault: dev.vdbs.weaviate.api_key
+    port: 443
+  opensearch:
+    enabled: false
+    host: ""                        # From Vault: dev.vdbs.opensearch.host
+    port: 1201
+    username: ""                    # From Vault: dev.vdbs.opensearch.username
+    password: ""                    # From Vault: dev.vdbs.opensearch.password
+    ssl: false
+  pgvector:
+    enabled: false
+    host: ""                        # From Vault: dev.vdbs.pgvector.host
+    port: 5432
+    database: ""                    # From Vault: dev.vdbs.pgvector.database
+    username: ""                    # From Vault: dev.vdbs.pgvector.username
+    password: ""                    # From Vault: dev.vdbs.pgvector.password
+  infinity:
+    enabled: false
+    host: ""                        # From Vault: dev.vdbs.infinity.host
+    port: 8080
+    url: ""                         # From Vault: dev.vdbs.infinity.url
+    database: "default_db"          # From Vault: dev.vdbs.infinity.database
+    tls: false
+
+embeddings:
+  default: "ollama_bge_m3"           # Key into profiles below
+  batch_size: 32
+  profiles:
+    # --- Ollama (self-hosted, no API key) ---
+    ollama_bge_m3:
+      provider: "ollama"
+      model: "bge-m3:567m"
+      dimensions: 1024
+      base_url: ""                    # From Vault: dev.models.ollama_bge_m3_567m_llm2.base_url
+    ollama_nomic:
+      provider: "ollama"
+      model: "nomic-embed-text:latest"
+      dimensions: 768
+      base_url: ""                    # From Vault: dev.models.ollama_nomic_embed_text_llm1.base_url
+    ollama_granite:
+      provider: "ollama"
+      model: "granite-embedding:278m"
+      dimensions: 768
+      base_url: ""                    # From Vault: dev.models.ollama_granite_embedding_278m_llm1.base_url
+    # --- OpenAI-compatible via OpenRouter (requires API key) ---
+    openrouter_bge_m3:
+      provider: "openai"
+      model: "baai/bge-m3"
+      dimensions: 1024
+      base_url: "https://openrouter.ai/api/v1"
+      api_key: ""                     # From Vault: dev.models.openai_text_embedding_baai_bge_m3_openrouter.api_key
+    openrouter_text_3_small:
+      provider: "openai"
+      model: "openai/text-embedding-3-small"
+      dimensions: 1536
+      base_url: "https://openrouter.ai/api/v1"
+      api_key: ""                     # From Vault
+    openrouter_text_3_large:
+      provider: "openai"
+      model: "openai/text-embedding-3-large"
+      dimensions: 3072
+      base_url: "https://openrouter.ai/api/v1"
+      api_key: ""                     # From Vault
+    openrouter_ada_002:
+      provider: "openai"
+      model: "openai/text-embedding-ada-002"
+      dimensions: 1536
+      base_url: "https://openrouter.ai/api/v1"
+      api_key: ""                     # From Vault
+
+ingestion:
+  chunk_size: 512                   # tokens
+  chunk_overlap: 50                 # tokens
+  chunker: "recursive"             # fixed | recursive | semantic
+  parser:
+    enabled: false
+    chain: ["internal"]             # internal | mineru | marker_mcp | deepdoc | docling | transformers
+    ocr_mode: "disabled"            # disabled | auto | force
+    table_policy: "table_as_markdown"
+    table_json_shape: "records"     # rows_cols | records
+    quality_min_confidence: 0.0
+    providers:
+      mineru:
+        enabled: false
+        base_url: ""                # From Vault/env: dev.services.mineru.base_url
+        timeout_seconds: 120
+      marker_mcp:
+        enabled: false
+        base_url: ""                # From Vault/env: dev.services.marker_mcp.base_url
+        timeout_seconds: 120
+      deepdoc:
+        enabled: false
+        command: ["deepdoc"]        # Local command adapter
+        timeout_seconds: 120
+      docling:
+        enabled: false
+        command: ["docling"]        # Local command adapter
+        timeout_seconds: 120
+      transformers:
+        enabled: false
+        base_url: ""                # Optional external parser endpoint
+        endpoint_path: "/parse"
+        command: []                 # Optional local command adapter
+        timeout_seconds: 120
+
+lifecycle:
+  soft_delete_first: true
+  retention_days: 90
+  purge_batch_size: 100
+
+metadata:
+  max_size_bytes: 40960             # 40 KB per record
