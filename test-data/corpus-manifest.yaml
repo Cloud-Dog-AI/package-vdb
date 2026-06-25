@@ -1,0 +1,162 @@
+version: "1.0"
+updated_at: "2026-02-28"
+package: "cloud_dog_vdb"
+
+corpus:
+  - id: aon_global_medical_trend_2026
+    file: "Aon global-medical-trend-rates-report-2026.pdf"
+    category: "mixed_report"
+    recommended_ocr_mode: "auto"
+    expectations:
+      require_headings: true
+      require_tables: true
+      min_text_chars: 3000
+      min_chunks: 8
+
+  - id: bosib_large_pdf
+    file: "BOSIB13bdde89d07f1b3711dd8e86adb477.pdf"
+    category: "large_mixed_pdf"
+    recommended_ocr_mode: "auto"
+    expectations:
+      require_headings: true
+      require_tables: true
+      min_text_chars: 5000
+      min_chunks: 12
+
+  - id: celex_32016r0679
+    file: "CELEX_32016R0679_EN_TXT.pdf"
+    category: "regulatory_text"
+    recommended_ocr_mode: "disabled"
+    expectations:
+      require_headings: true
+      require_tables: false
+      min_text_chars: 3000
+      min_chunks: 10
+
+  - id: examples_pdf
+    file: "Examples.pdf"
+    category: "mixed_examples"
+    recommended_ocr_mode: "auto"
+    expectations:
+      require_headings: true
+      require_tables: true
+      min_text_chars: 1000
+      min_chunks: 5
+
+  - id: hssd_2025
+    file: "HSSD_2025-0-00.pdf"
+    category: "scanned_or_mixed"
+    recommended_ocr_mode: "auto"
+    expectations:
+      require_headings: true
+      require_tables: true
+      min_text_chars: 2000
+      min_chunks: 8
+
+  - id: handwritten_concern_form
+    file: "Handwritten-Concern-Form-reporting-Domestic-Abuse-Good-Example.pdf"
+    category: "handwritten_form"
+    recommended_ocr_mode: "force"
+    expectations:
+      require_headings: false
+      require_tables: false
+      require_ocr: true
+      min_text_chars: 400
+      min_chunks: 2
+
+  - id: ibrd_financial_statements_2025
+    file: "IBRD-Financial-Statements-June-2025.pdf"
+    category: "financial_table_heavy"
+    recommended_ocr_mode: "auto"
+    expectations:
+      require_headings: true
+      require_tables: true
+      min_text_chars: 2500
+      min_chunks: 10
+
+  - id: item_cod_form
+    file: "ITEM_COD-0012-0001-_-089.pdf"
+    category: "structured_form"
+    recommended_ocr_mode: "auto"
+    expectations:
+      require_headings: false
+      require_tables: true
+      min_text_chars: 600
+      min_chunks: 3
+
+  - id: nist_sp_800_53r5
+    file: "NIST.SP.800-53r5.pdf"
+    category: "long_technical_text"
+    recommended_ocr_mode: "disabled"
+    expectations:
+      require_headings: true
+      require_tables: true
+      min_text_chars: 5000
+      min_chunks: 16
+
+  - id: sample_rural_completed_form
+    file: "SAMPLE OF RURAL COMPLETED FORM.pdf"
+    category: "completed_form"
+    recommended_ocr_mode: "auto"
+    expectations:
+      require_headings: false
+      require_tables: true
+      min_text_chars: 500
+      min_chunks: 3
+
+  - id: z83_example
+    file: "Z83-example.pdf"
+    category: "government_form"
+    recommended_ocr_mode: "auto"
+    expectations:
+      require_headings: false
+      require_tables: true
+      min_text_chars: 600
+      min_chunks: 3
+
+  - id: a10k_2023_filing
+    file: "a10kfy2023filing.pdf"
+    category: "sec_filing"
+    recommended_ocr_mode: "disabled"
+    expectations:
+      require_headings: true
+      require_tables: true
+      min_text_chars: 2500
+      min_chunks: 10
+
+  - id: fw9_form
+    file: "fw9.pdf"
+    category: "tax_form"
+    recommended_ocr_mode: "auto"
+    expectations:
+      require_headings: false
+      require_tables: true
+      min_text_chars: 400
+      min_chunks: 2
+
+performance_baselines:
+  metrics:
+    - parse_latency_p50_ms
+    - parse_latency_p95_ms
+    - throughput_pages_per_second
+    - ocr_auto_trigger_ratio
+    - quality_invariant_pass_rate
+
+  thresholds:
+    minimum_quality_invariant_pass_rate: 0.95
+    max_failure_ratio_per_provider: 0.05
+
+providers:
+  parser:
+    - internal
+    - mineru
+    - deepdoc
+    - docling
+    - marker_mcp
+    - transformers
+  ocr:
+    - local
+    - external_service
+    - llm_ocr
+  embedding:
+    - configured_via_cloud_dog_config

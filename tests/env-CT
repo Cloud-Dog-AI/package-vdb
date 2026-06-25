@@ -1,0 +1,4 @@
+TEST_ENV_TIER=CT
+
+# Compatibility tier validates API/config behavioural parity.
+# Use this profile for CT1 suite runs.

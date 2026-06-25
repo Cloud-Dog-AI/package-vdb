@@ -1,0 +1,13 @@
+REQUIRE_ALL_PDF_PARSERS=true
+DEEPDOC_ENABLED=true
+DEEPDOC_COMMAND=.venv/bin/python tests/tools/local_deepdoc_parser.py
+DOCLING_ENABLED=true
+DOCLING_COMMAND=.venv/bin/python tests/tools/local_docling_parser.py
+TRANSFORMERS_ENABLED=true
+TRANSFORMERS_COMMAND=.venv/bin/python tests/tools/local_transformers_parser.py
+MINERU_ENABLED=true
+MINERU_FORMULA_ENABLE=false
+MINERU_TABLE_ENABLE=false
+MINERU_RETURN_MIDDLE_JSON=false
+MINERU_RETURN_IMAGES=false
+MARKER_MCP_ENABLED=true
