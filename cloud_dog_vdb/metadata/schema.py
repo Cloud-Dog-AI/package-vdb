@@ -24,7 +24,8 @@ RFC3339_UTC_SUFFIXES = ("Z", "+00:00")
 HEX_RE = re.compile(r"^[0-9a-fA-F]+$")
 MAX_METADATA_BYTES = 64 * 1024
 REQUIRED_FIELDS = {"doc_id", "source_uri", "lifecycle_state", "created_at"}
-VALID_SOURCE_TYPES = {"web", "file", "api", "database", "other"}
+# "excel"/"spreadsheet" added for W28E-604 multi-granularity workbook records (§9).
+VALID_SOURCE_TYPES = {"web", "file", "api", "database", "excel", "spreadsheet", "other"}
 VALID_LIFECYCLE_STATES = {"active", "deleted", "superseded", "archived"}
 
 

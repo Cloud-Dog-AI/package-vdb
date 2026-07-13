@@ -4,7 +4,7 @@ authors = [
   { name = "Cloud-Dog, Viewdeck Engineering Limited" }
 ]
 name = "cloud-dog-vdb"
-version = "0.5.4"
+version = "0.5.5"
 description = "PS-60 Vector DB Interfaces for Cloud-Dog services"
 requires-python = ">=3.10"
 dependencies = [
@@ -24,6 +24,8 @@ weaviate = ["weaviate-client>=4.5"]
 opensearch = ["opensearch-py>=2.5"]
 pgvector = ["asyncpg>=0.29", "pgvector>=0.2"]
 pandas = ["pandas>=2.0"]
+spreadsheet = ["openpyxl>=3.1", "odfpy>=1.4"]
+parquet = ["pyarrow>=14.0"]
 otel = ["opentelemetry-api>=1.20"]
 dev = [
     "pytest>=8.0",

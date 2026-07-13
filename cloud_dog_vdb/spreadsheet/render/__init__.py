@@ -12,34 +12,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""Per-object-type text renderers (requirements section 9.1)."""
+
 from __future__ import annotations
 
-from cloud_dog_vdb.domain.models import (
-    CapabilityDescriptor,
-    CollectionSpec,
-    Job,
-    Record,
-    SearchRequest,
-    SearchResponse,
-    SearchResult,
+from cloud_dog_vdb.spreadsheet.render.renderers import (
+    render_column,
+    render_formula,
+    render_named_range,
+    render_pivot,
+    render_range,
+    render_row_batch,
+    render_sheet,
+    render_table,
+    render_workbook,
 )
-from cloud_dog_vdb.factory import get_vdb_client
-from cloud_dog_vdb.ingestion.pipeline import IngestionPipeline, ParserIngestionOptions, ingest_document
-from cloud_dog_vdb.runtime.client import VDBClient
-
-__version__ = "0.5.5"
 
 __all__ = [
-    "VDBClient",
-    "CapabilityDescriptor",
-    "CollectionSpec",
-    "Record",
-    "SearchRequest",
-    "SearchResult",
-    "SearchResponse",
-    "Job",
-    "get_vdb_client",
-    "ingest_document",
-    "ParserIngestionOptions",
-    "IngestionPipeline",
+    "render_column",
+    "render_formula",
+    "render_named_range",
+    "render_pivot",
+    "render_range",
+    "render_row_batch",
+    "render_sheet",
+    "render_table",
+    "render_workbook",
 ]
